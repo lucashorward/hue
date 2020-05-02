@@ -1,0 +1,1 @@
+This project is divided into a core and cli. The core handles all calls to the Hue bridge, so it is possible to re-use this.

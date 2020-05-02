@@ -1,8 +1,15 @@
 extern crate hue_core;
 use std::collections::HashMap;
+use std::path::Path;
 
 #[tokio::main]
 async fn main() {
+    if Path::new("./config.toml").exists() == false {
+        std::process::exit( {
+            eprintln!("Please create a config.toml in your running directory containing the ip and apikey properties.");
+            1
+        });
+    }
     let base_uri: String = hue_core::generate_base_uri();
     let command = std::env::args().nth(1).expect("no command given");
     if command == "lights" {
@@ -18,10 +25,7 @@ async fn main() {
             turn_off_light(&base_uri, &id).await;
         }
     } else if command == "help" {
-        println!("The following commands are available:");
-        println!("`lights` - prints all lights with id, name and status (on/off)");
-        println!("`light on {{id}} - turns light {{id}} on");
-        println!("`light off {{id}} - turns light {{id}} off");
+        show_help();
     }
     else {
         println!("Unknown command: {}", command);
@@ -51,4 +55,11 @@ async fn turn_off_light(uri: &String, id: &String) {
         Err(why) => println!("{}", why),
         Ok(data) => data
     };
+}
+
+fn show_help() {
+    println!("The following commands are available:");
+    println!("`lights` - prints all lights with id, name and status (on/off)");
+    println!("`light on {{id}}` - turns light {{id}} on");
+    println!("`light off {{id}}` - turns light {{id}} off");
 }
