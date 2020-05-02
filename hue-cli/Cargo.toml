@@ -1,11 +1,11 @@
 [package]
-name = "hue"
+name = "hue_cli"
 version = "0.1.0"
-authors = ["lucashorward <lucas.horward@gmail.com>"]
+authors = ["Lucas Horward <lucas.horward@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-config = "0.9"
-ureq = "0.12"
+hue_core = {path = "../hue-core", version = "0.12"}
+tokio = "0.2"
