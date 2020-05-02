@@ -3,6 +3,7 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 extern crate reqwest;
+use reqwest::Response;
 use reqwest::Error;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -42,27 +43,25 @@ pub async fn get_lights(base_uri: &String) -> Result<HashMap<i16, Light>, Error>
     Ok(resp)
 }
 
-pub async fn set_light_status(base_uri: &String, id: String, status: &LightState) -> Result<(), Error> {
+pub async fn set_light_status(base_uri: &String, id: String, status: &LightState) -> Result<Response, Error> {
     let post_string = format!("lights/{}/state", id);
     let api_string = create_api_url(&base_uri, &post_string);
     let client = reqwest::Client::new();
-    let result = client.put(&api_string)
+    client.put(&api_string)
         .json(status)
         .send()
-        .await;
-
-    Ok(())
+        .await
 }
 
-pub async fn turn_on_light(base_uri: &String, id: String) -> Result<(), Error> {
+pub async fn turn_on_light(base_uri: &String, id: String) -> Result<Response, Error> {
     set_light_status(base_uri, id, &LightState {on: Some(true), bri: None, hue: None, sat: None}).await
 }
 
-pub async fn turn_off_light(base_uri: &String, id: String) -> Result<(), Error> {
+pub async fn turn_off_light(base_uri: &String, id: String) -> Result<Response, Error> {
     set_light_status(base_uri, id, &LightState {on: Some(false), bri: None, hue: None, sat: None}).await
 }
 
-pub async fn set_brightness(base_uri: &String, id: String, brightness: i16) -> Result<(), Error> {
+pub async fn set_brightness(base_uri: &String, id: String, brightness: i16) -> Result<Response, Error> {
     set_light_status(base_uri, id, &LightState {on: None, bri: Some(brightness), hue: None, sat: None}).await
 }
 

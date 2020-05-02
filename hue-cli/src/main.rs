@@ -50,14 +50,14 @@ async fn show_light_names(uri: &String) {
 async fn turn_on_light(uri: &String, id: &String) {
     match hue_core::turn_on_light(uri, id.to_string()).await {
         Err(why) => println!("{}", why),
-        Ok(data) => data
+        Ok(_) => ()
     };
 }
 
 async fn turn_off_light(uri: &String, id: &String) {
     match hue_core::turn_off_light(uri, id.to_string()).await {
         Err(why) => println!("{}", why),
-        Ok(data) => data
+        Ok(_) => ()
     };
 }
 
@@ -71,6 +71,6 @@ fn show_help() {
 async fn set_brightness(uri: &String, id: String, brightness: i16) {
     match hue_core::set_brightness(uri, id, brightness).await {
         Err(why) => println!("{}", why),
-        Ok(data) => data
+        Ok(_) => ()
     };
 }
