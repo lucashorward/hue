@@ -7,8 +7,24 @@ async fn main() {
     let command = std::env::args().nth(1).expect("no command given");
     if command == "lights" {
         show_light_names(&base_uri).await;
-    } else {
-        println!("Unknown command");
+    }
+    else if command == "light" {
+        let subcommand = std::env::args().nth(2).expect("no sub command given");
+        let id = std::env::args().nth(3).expect("no id given");
+        if subcommand == "on" {
+            turn_on_light(&base_uri, &id).await;
+        }
+        if subcommand == "off" {
+            turn_off_light(&base_uri, &id).await;
+        }
+    } else if command == "help" {
+        println!("The following commands are available:");
+        println!("`lights` - prints all lights with id, name and status (on/off)");
+        println!("`light on {{id}} - turns light {{id}} on");
+        println!("`light off {{id}} - turns light {{id}} off");
+    }
+    else {
+        println!("Unknown command: {}", command);
     }
 }
 
@@ -18,7 +34,21 @@ async fn show_light_names(uri: &String) {
         Err(why) => println!("{}", why),
         Ok(data) => result = data,
     };
-    for (_, value) in &result {
-        println!("Name: {}", value.name);
+    for (key, value) in &result {
+        println!("id: {} - name: {} - on: {}", key, value.name, value.state.on);
     }
+}
+
+async fn turn_on_light(uri: &String, id: &String) {
+    match hue_core::turn_on_light(uri, id.to_string()).await {
+        Err(why) => println!("{}", why),
+        Ok(data) => data
+    };
+}
+
+async fn turn_off_light(uri: &String, id: &String) {
+    match hue_core::turn_off_light(uri, id.to_string()).await {
+        Err(why) => println!("{}", why),
+        Ok(data) => data
+    };
 }
