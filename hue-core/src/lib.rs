@@ -13,15 +13,10 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct LightState {
-    pub on: bool,
-    pub bri: i16,
-    pub hue: i16,
-    pub sat: i16,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct OnOff {
-    pub on: bool
+    pub on: Option<bool>,
+    pub bri: Option<i16>,
+    pub hue: Option<i16>,
+    pub sat: Option<i16>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -47,24 +42,28 @@ pub async fn get_lights(base_uri: &String) -> Result<HashMap<i16, Light>, Error>
     Ok(resp)
 }
 
-pub async fn set_light_status(base_uri: &String, id: String, light_on: bool) -> Result<(), Error> {
+pub async fn set_light_status(base_uri: &String, id: String, status: &LightState) -> Result<(), Error> {
     let post_string = format!("lights/{}/state", id);
     let api_string = create_api_url(&base_uri, &post_string);
     let client = reqwest::Client::new();
-    let status = OnOff { on: light_on};
     let result = client.put(&api_string)
-        .json(&status)
+        .json(status)
         .send()
         .await;
+
     Ok(())
 }
 
 pub async fn turn_on_light(base_uri: &String, id: String) -> Result<(), Error> {
-    set_light_status(base_uri, id, true).await
+    set_light_status(base_uri, id, &LightState {on: Some(true), bri: None, hue: None, sat: None}).await
 }
 
 pub async fn turn_off_light(base_uri: &String, id: String) -> Result<(), Error> {
-    set_light_status(base_uri, id, false).await
+    set_light_status(base_uri, id, &LightState {on: Some(false), bri: None, hue: None, sat: None}).await
+}
+
+pub async fn set_brightness(base_uri: &String, id: String, brightness: i16) -> Result<(), Error> {
+    set_light_status(base_uri, id, &LightState {on: None, bri: Some(brightness), hue: None, sat: None}).await
 }
 
 fn create_base_uri(uri: &String, api_key: &String) -> String {
