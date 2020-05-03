@@ -7,17 +7,31 @@ use reqwest::Response;
 use reqwest::Error;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use wasm_bindgen::prelude::*;
 
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+#[wasm_bindgen]
 #[derive(Debug, Serialize, Deserialize)]
 pub struct LightState {
     pub on: Option<bool>,
     pub bri: Option<i16>,
     pub hue: Option<i16>,
     pub sat: Option<i16>,
+}
+
+#[wasm_bindgen]
+impl LightState {
+    pub fn new(on: Option<bool>, bri: Option<i16>, hue: Option<i16>, sat: Option<i16>) -> LightState {
+        LightState { 
+            on,
+            bri,
+            hue,
+            sat
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -69,6 +83,6 @@ fn create_base_uri(uri: &String, api_key: &String) -> String {
     format!("http://{}/api/{}", uri, api_key)
 }
 
-fn create_api_url(base_uri: &String, post_fix: &String) -> String {
+pub fn create_api_url(base_uri: &String, post_fix: &String) -> String {
     format!("{}/{}", base_uri, post_fix)
 }

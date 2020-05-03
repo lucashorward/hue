@@ -1,0 +1,22 @@
+{
+  "name": "hue-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "serve": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "hue_core_wasm": "0.1.1",
+    "@wasm-tool/wasm-pack-plugin": "1.0.1",
+    "text-encoding": "^0.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.0",
+    "copy-webpack-plugin": "^5.0.0"
+  },
+  "author": "Lucas Horward <lucas.horward@gmail.com>",
+  "license": "ISC"
+}
