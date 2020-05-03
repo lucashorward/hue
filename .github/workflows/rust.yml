@@ -1,0 +1,32 @@
+name: Rust
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build_core:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Core
+      run: cd hue-core && cargo build --verbose
+    - name: Test Core
+      run: cd hue-core && cargo test --verbose
+  build_cli:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build CLI
+      run: cd hue-cli && cargo build --verbose
+    - name: Test CLI
+      run: cd hue-cli && cargo test --verbose
+  build_core_wasm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Core Wasm
+      uses: jetli/wasm-pack-action@v0.3.0
+    - run: cd hue-core-wasm && wasm-pack build
