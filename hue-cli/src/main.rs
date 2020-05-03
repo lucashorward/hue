@@ -43,7 +43,7 @@ async fn show_light_names(uri: &String) {
         Ok(data) => result = data,
     };
     for (key, value) in &result {
-        println!("id: {} - name: {} - on: {:?}", key, value.name, value.state.on);
+        println!("id: {} - name: {} - on: {:?}", key, value.name, value.state.on.unwrap());
     }
 }
 
