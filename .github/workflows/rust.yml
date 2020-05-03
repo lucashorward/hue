@@ -28,4 +28,4 @@ jobs:
     steps:
     - uses: jetli/wasm-pack-action@v0.3.0
     - name: Build Core Wasm
-      run: ls && cd hue-core-wasm && wasm-pack build
+      run: ls
