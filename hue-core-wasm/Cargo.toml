@@ -1,8 +1,10 @@
 [package]
 name = "hue_core_wasm"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["lucashorward <lucas.horward@gmail.com>"]
 edition = "2018"
+repository = "https://github.com/lucashorward/hue"
+keywords = ["hue", "hue bridge", "wasm", "rust", "rust-wasm"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
