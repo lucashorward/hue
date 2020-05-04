@@ -8,7 +8,7 @@
     "serve": "webpack-dev-server"
   },
   "devDependencies": {
-    "hue_core_wasm": "0.1.1",
+    "hue_core_wasm": "0.1.4",
     "@wasm-tool/wasm-pack-plugin": "1.0.1",
     "text-encoding": "^0.7.0",
     "html-webpack-plugin": "^3.2.0",
