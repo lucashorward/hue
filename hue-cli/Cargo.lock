@@ -219,13 +219,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "hue_cli"
 version = "0.1.0"
 dependencies = [
- "hue_core 0.13.0",
+ "hue_core 0.15.0",
  "tokio 0.2.20 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "hue_core"
-version = "0.13.0"
+version = "0.15.0"
 dependencies = [
  "config 0.9.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.10.4 (registry+https://github.com/rust-lang/crates.io-index)",
