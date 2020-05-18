@@ -99,7 +99,7 @@ pub async fn set_light_status(
         base_uri,
         id,
         "lights".to_owned(),
-        "status".to_owned(),
+        "state".to_owned(),
         status,
     )
     .await
